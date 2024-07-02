@@ -1,8 +1,6 @@
 # vorpal-use
 
-<img src="https://travis-ci.org/vorpaljs/vorpal-use.svg" alt="Build Status" />
-
-An extension for [Vorpal](https://github.com/dthree/vorpal).
+An extension for [Vorpal](https://github.com/ApeironTsuka/vorpal).
 
 Forgot to install a useful extension in development and now you need it live? No problem.
 
@@ -23,15 +21,16 @@ node~$ repl:
 ### Installation
 
 ```bash
-npm install vorpal-use --save
+npm install @ApeironTsuka/vorpal-use --save
 ```
 
 ### Usage
 
 ```js
-const Vorpal = require('vorpal');
-const use = require('vorpal-use');
-let vorpal = new Vorpal();
+import Vorpal from '@ApeironTsuka/vorpal';
+import use from '@ApeironTsuka/vorpal-use';
+
+const vorpal = new Vorpal();
 
 vorpal
   .delimiter('node~$')

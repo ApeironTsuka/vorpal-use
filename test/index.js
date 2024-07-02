@@ -1,13 +1,11 @@
 'use strict';
 
-require('assert');
+import assert from 'assert';
+import should from 'should';
+import Vorpal from '@ApeironTsuka/vorpal';
+import use from '../lib/index.js';
 
-var should = require('should');
-var Vorpal = require('vorpal');
-var use = require('./../lib/index');
-
-var vorpal;
-var stdout = '';
+let stdout = '', vorpal;
 
 function pipeFn(data) {
   stdout += data;
@@ -15,40 +13,40 @@ function pipeFn(data) {
 }
 
 function stdoutFn() {
-  var result = stdout;
+  const result = stdout;
   stdout = '';
   return result;
 }
 
-describe('vorpal-use', function () {
-  before('vorpal preps', function () {
+describe('vorpal-use', () => {
+  before('vorpal preps', () => {
     vorpal = new Vorpal()
       .pipe(pipeFn)
       .show();
   });
 
-  beforeEach('vorpal preps', function () {
+  beforeEach('vorpal preps', () => {
     stdout = '';
   });
 
-  it('should exist and be a function', function () {
+  it('should exist and be a function', () => {
     should.exist(use);
     use.should.be.type('function');
   });
 
-  it('should import into Vorpal', function () {
-    (function () {
+  it('should import into Vorpal', () => {
+    (() => {
       vorpal.use(use);
     }).should.not.throw();
   });
 
   it('should install a live vorpal-module', function (done) {
     this.timeout(90000);
-    vorpal.exec('use vorpal-hacker-news').then(function () {
-      var out = stdoutFn();
+    vorpal.exec('use @ApeironTsuka/vorpal-hacker-news').then(() => {
+      const out = stdoutFn();
       out.should.containEql('Successfully registered');
       done();
-    }).catch(function (err, data) {
+    }).catch((err, data) => {
       console.log(stdoutFn());
       console.log(err, data);
       done(err);
@@ -57,10 +55,10 @@ describe('vorpal-use', function () {
 
   it('should run the live vorpal-module\'s command', function (done) {
     this.timeout(20000);
-    vorpal.exec('hacker-news').then(function () {
+    vorpal.exec('hacker-news').then(() => {
       stdoutFn().should.containEql('points by');
       done();
-    }).catch(function (err) {
+    }).catch((err) => {
       done(err);
     });
   });
